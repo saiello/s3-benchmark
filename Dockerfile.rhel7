@@ -1,0 +1,10 @@
+FROM registry.access.redhat.com/ubi7/go-toolset:1.17.12-2 AS builderGoStable
+USER root
+RUN mkdir /brokkr && chown default /brokkr
+
+RUN cd / && git clone https://github.com/Ignalina/s3-benchmark.git && cd s3-benchmark && /opt/rh/go-toolset-1.17/root/usr/bin/go mod tidy -compat=1.17  && /opt/rh/go-toolset-1.17/root/usr/bin/go build -o /brokkr/s3-benchmark
+
+FROM registry.access.redhat.com/ubi7/ubi-minimal
+USER root
+RUN mkdir /brokkr && chmod +xwr /brokkr
+COPY --from=builderGoStable /brokkr/* /brokkr/
