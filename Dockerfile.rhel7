@@ -8,3 +8,4 @@ FROM registry.access.redhat.com/ubi7/ubi-minimal
 USER root
 RUN mkdir /brokkr && chmod +xwr /brokkr
 COPY --from=builderGoStable /brokkr/* /brokkr/
+ENTRYPOINT ["/brokkr/s3-benchmark"]
