@@ -73,6 +73,7 @@ var httpClient = &http.Client{Transport: HTTPTransport}
 func getS3Client() *s3.S3 {
 	// Build our config
 	creds := credentials.NewStaticCredentials(access_key, secret_key, "")
+	//loglevel := aws.LogDebug
 	loglevel := aws.LogOff
 	// Build the rest of the configuration
 	awsConfig := &aws.Config{
@@ -312,6 +313,8 @@ func main() {
 	if object_size, err = bytefmt.ToBytes(sizeArg); err != nil {
 		log.Fatalf("Invalid -z argument for object size: %v", err)
 	}
+
+	url_host = strings.TrimRight(url_host, "/")
 
 	// Echo the parameters
 	logit(fmt.Sprintf("Parameters: url=%s, bucket=%s, region=%s, duration=%d, threads=%d, loops=%d, size=%s",
