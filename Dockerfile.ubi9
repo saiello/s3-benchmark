@@ -1,0 +1,7 @@
+FROM redhat/ubi9
+
+COPY ./s3-benchmark s3-benchmark
+
+RUN chmod +x s3-benchmark
+
+
